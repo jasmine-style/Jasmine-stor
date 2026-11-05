@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إنشاء حساب | JASMINE STYLE</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container navbar">
+        <div class="brand">
+          <div class="brand-mark">J</div>
+          <span>JASMINE</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="auth-shell">
+        <h2 style="margin-top:0;">إنشاء حساب جديد</h2>
+
+        <% if (flash) { %>
+          <div class="flash <%= flash.type %>"><%= flash.message %></div>
+        <% } %>
+
+        <form action="/register" method="POST" class="form-grid">
+          <div class="form-group">
+            <label for="full_name">الاسم الكامل</label>
+            <input id="full_name" name="full_name" type="text" required />
+          </div>
+
+          <div class="form-group">
+            <label for="username">اسم المستخدم</label>
+            <input id="username" name="username" type="text" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">البريد الإلكتروني</label>
+            <input id="email" name="email" type="email" />
+          </div>
+
+          <div class="form-group">
+            <label for="password">كلمة المرور</label>
+            <input id="password" name="password" type="password" required />
+          </div>
+
+          <button class="primary-button" type="submit">إنشاء الحساب</button>
+        </form>
+
+        <p class="muted" style="margin-top:16px; text-align:center;">
+          لديك حساب؟ <a href="/login" style="color:#d9c7ff; font-weight:700;">تسجيل الدخول</a>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

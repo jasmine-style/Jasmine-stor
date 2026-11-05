@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JASMINE STYLE | متجر فخيم</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container navbar">
+        <div class="brand">
+          <div class="brand-mark">J</div>
+          <span>JASMINE</span>
+        </div>
+
+        <nav class="nav-menu">
+          <a class="nav-link active" href="/">الرئيسية</a>
+          <a class="nav-link" href="#featured">الأكثر مبيعًا</a>
+          <a class="nav-link" href="#collections">التجميعات</a>
+          <a class="nav-link" href="/cart">السلة</a>
+          <% if (user && user.role !== 'customer') { %>
+            <a class="nav-link" href="/admin">لوحة الإدارة</a>
+          <% } %>
+        </nav>
+
+        <div class="nav-actions">
+          <a class="icon-button" href="/cart" aria-label="سلة التسوق">
+            🛒
+            <% if (cartCount > 0) { %>
+              <span class="cart-badge"><%= cartCount %></span>
+            <% } %>
+          </a>
+
+          <% if (!user) { %>
+            <a class="secondary-button" href="/login">تسجيل الدخول</a>
+            <a class="primary-button" href="/register">إنشاء حساب</a>
+          <% } else { %>
+            <span class="muted">مرحبًا، <%= user.full_name || user.username %></span>
+            <form action="/logout" method="POST" style="display:inline;">
+              <button class="ghost-button" type="submit">تسجيل الخروج</button>
+            </form>
+          <% } %>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-shell">
+          <div class="hero-copy">
+            <span class="eyebrow">مستوى فخم جديد</span>
+            <h1>أزياء <span class="gradient-text">JASMINE</span> ذات طابع أنيق ومميز</h1>
+            <p>
+              متجر فاشن متكامل يجمع بين التصميم ثلاثي الأبعاد، قطع أنيقة، ومستوى أوروبي فائق، مع تجربة شراء سلسة وسريعة مناسبة للجوال والكمبيوتر.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-button" href="#featured">تسوق الآن</a>
+              <a class="secondary-button" href="/register">أنشئ حسابك</a>
+            </div>
+            <div class="metrics">
+              <div class="metric">
+                <strong>12K+</strong>
+                <span>عميل راضي</span>
+              </div>
+              <div class="metric">
+                <strong>4.9</strong>
+                <span>تقييمات</span>
+              </div>
+              <div class="metric">
+                <strong>24/7</strong>
+                <span>دعم سريع</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="visual-stack">
+              <div class="visual-card large">
+                <div class="card-image" style="background: linear-gradient(135deg, rgba(107,71,255,0.5), rgba(255,176,107,0.5)), url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;"> </div>
+                <div class="card-meta">
+                  <div>
+                    <strong>Collection 2026</strong>
+                    <div class="muted">Premium Look</div>
+                  </div>
+                  <span class="badge">NEW</span>
+                </div>
+              </div>
+
+              <div class="visual-card small">
+                <div class="card-image" style="height: 180px; background: linear-gradient(135deg, rgba(51,180,224,0.42), rgba(245,113,113,0.55)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=80') center/cover no-repeat;"> </div>
+                <div class="card-meta">
+                  <div>
+                    <strong>Limited</strong>
+                    <div class="muted">Glow Edit</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <% if (flash) { %>
+        <div class="container">
+          <div class="flash <%= flash.type %>"><%= flash.message %></div>
+        </div>
+      <% } %>
+
+      <section id="featured" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>الأكثر مبيعًا</h2>
+            <a href="#collections">استعرض الكل</a>
+          </div>
+
+          <div class="product-grid">
+            <% products.forEach((product) => { %>
+              <% const images = typeof product.images === 'string' ? JSON.parse(product.images || '[]') : (product.images || []); const mainImage = images[0] || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80'; %>
+              <article class="product-card">
+                <div class="product-thumb">
+                  <a href="/product/<%= product.id %>"><img src="<%= mainImage %>" alt="<%= product.name %>" /></a>
+                </div>
+                <div class="product-content">
+                  <div class="product-top">
+                    <h3 class="product-title"><%= product.name %></h3>
+                    <span class="product-price"><%= Number(product.price).toFixed(2) %> ر.س</span>
+                  </div>
+                  <p class="product-summary"><%= product.description.slice(0, 80) %>...</p>
+                  <div class="product-meta">
+                    <span class="badge"><%= Number(product.stock) > 0 ? 'متوفر' : 'غير متوفر' %></span>
+                    <a class="primary-button" href="/product/<%= product.id %>">عرض المنتج</a>
+                  </div>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+      <section id="collections" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>مجموعات مختارة</h2>
+            <a href="/register">انضم الآن</a>
+          </div>
+          <div class="product-grid">
+            <% products.slice(0, 4).forEach((product) => { %>
+              <% const images = typeof product.images === 'string' ? JSON.parse(product.images || '[]') : (product.images || []); const mainImage = images[0] || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80'; %>
+              <article class="product-card">
+                <div class="product-thumb"><img src="<%= mainImage %>" alt="" /></div>
+                <div class="product-content">
+                  <div class="product-top">
+                    <h3 class="product-title"><%= product.name %></h3>
+                    <span class="product-price"><%= Number(product.price).toFixed(2) %> ر.س</span>
+                  </div>
+                  <p class="product-summary"><%= product.description.slice(0, 90) %>...</p>
+                  <form data-cart-form>
+                    <input type="hidden" name="productId" value="<%= product.id %>" />
+                    <input type="hidden" name="size" value="Default" />
+                    <input type="hidden" name="color" value="Default" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button class="primary-button" type="submit">أضف إلى السلة</button>
+                  </form>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/public/script.js"></script>
+  </body>
+</html>

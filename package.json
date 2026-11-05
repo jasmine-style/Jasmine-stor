@@ -1,0 +1,26 @@
+{
+  "name": "jasmine-store",
+  "version": "1.0.0",
+  "description": "JASMINE STYLE e-commerce platform with admin panel and order management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "jasmine",
+    "store",
+    "admin-panel"
+  ],
+  "author": "amrmido781-design",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.2",
+    "sqlite3": "^5.1.7"
+  }
+}

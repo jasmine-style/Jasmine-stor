@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة الإدارة | JASMINE STYLE</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container navbar">
+        <div class="brand">
+          <div class="brand-mark">J</div>
+          <span>JASMINE</span>
+        </div>
+        <div class="nav-actions">
+          <span class="muted">مرحبًا، <%= user.full_name || user.username %></span>
+          <form action="/logout" method="POST" style="display:inline;">
+            <button class="ghost-button" type="submit">تسجيل الخروج</button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <main class="container admin-shell">
+      <% if (flash) { %>
+        <div class="flash <%= flash.type %>"><%= flash.message %></div>
+      <% } %>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="muted">إجمالي المنتجات</div>
+          <h3><%= stats.products %></h3>
+        </div>
+        <div class="stat-card">
+          <div class="muted">إجمالي الطلبات</div>
+          <h3><%= stats.orders %></h3>
+        </div>
+        <div class="stat-card">
+          <div class="muted">إجمالي المبيعات</div>
+          <h3><%= Number(stats.totalSales).toFixed(2) %> ر.س</h3>
+        </div>
+        <div class="stat-card">
+          <div class="muted">الطلبات المعلقة</div>
+          <h3><%= stats.pendingOrders %></h3>
+        </div>
+      </div>
+
+      <div class="admin-layout">
+        <aside class="side-menu">
+          <a class="side-item active" href="/admin">لوحة التحكم</a>
+          <a class="side-item" href="/admin/products">إدارة المنتجات</a>
+          <a class="side-item" href="/admin/orders">إدارة الطلبات</a>
+          <a class="side-item" href="/admin/admins">إدارة الأدمن</a>
+        </aside>
+
+        <section class="panel">
+          <h2>نظرة عامة</h2>
+          <div class="summary-box">
+            <div class="summary-row"><span>المنتجات المتاحة</span><strong><%= stats.products %></strong></div>
+            <div class="summary-row"><span>الطلبات المراجعة</span><strong><%= stats.pendingOrders %></strong></div>
+            <div class="summary-row"><span>إجمالي المخزون</span><strong><%= stats.totalStock %></strong></div>
+            <div class="summary-row"><span>عدد الأدمن</span><strong><%= stats.admins %></strong></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

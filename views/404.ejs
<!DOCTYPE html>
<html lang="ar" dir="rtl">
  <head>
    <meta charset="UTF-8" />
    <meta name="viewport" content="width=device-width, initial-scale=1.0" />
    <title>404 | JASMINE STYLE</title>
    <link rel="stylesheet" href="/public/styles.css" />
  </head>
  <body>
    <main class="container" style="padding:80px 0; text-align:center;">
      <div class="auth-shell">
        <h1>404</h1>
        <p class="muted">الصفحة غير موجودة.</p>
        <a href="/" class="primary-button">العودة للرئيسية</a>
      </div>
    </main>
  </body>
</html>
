@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 | JASMINE STYLE</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <main class="container" style="padding:80px 0; text-align:center;">
+      <div class="auth-shell">
+        <h1>403</h1>
+        <p class="muted">لا تملك صلاحية الوصول إلى هذه الصفحة.</p>
+        <a href="/" class="primary-button">العودة للرئيسية</a>
+      </div>
+    </main>
+  </body>
+</html>

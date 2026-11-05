@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إدارة الطلبات | JASMINE STYLE</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container navbar">
+        <div class="brand">
+          <div class="brand-mark">J</div>
+          <span>JASMINE</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container admin-shell">
+      <% if (flash) { %>
+        <div class="flash <%= flash.type %>"><%= flash.message %></div>
+      <% } %>
+
+      <div class="admin-layout">
+        <aside class="side-menu">
+          <a class="side-item" href="/admin">لوحة التحكم</a>
+          <a class="side-item" href="/admin/products">إدارة المنتجات</a>
+          <a class="side-item active" href="/admin/orders">إدارة الطلبات</a>
+          <a class="side-item" href="/admin/admins">إدارة الأدمن</a>
+        </aside>
+
+        <section class="form-card">
+          <h2>الطلبات</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>العميل</th>
+                  <th>الإجمالي</th>
+                  <th>الدفع</th>
+                  <th>الحالة</th>
+                  <th>إيصال</th>
+                  <th>تحديث</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% orders.forEach((order) => { %>
+                  <tr>
+                    <td>
+                      <div><%= order.customer_name %></div>
+                      <small class="muted"><%= order.phone %></small>
+                    </td>
+                    <td><%= Number(order.total).toFixed(2) %> ر.س</td>
+                    <td><%= order.payment_method %></td>
+                    <td><%= order.status %></td>
+                    <td>
+                      <% if (order.receipt_image) { %>
+                        <a href="<%= order.receipt_image %>" target="_blank">عرض الإيصال</a>
+                      <% } else { %>
+                        لا يوجد
+                      <% } %>
+                    </td>
+                    <td>
+                      <form action="/admin/orders/<%= order.id %>/status" method="POST" class="form-grid">
+                        <select name="payment_status">
+                          <option value="pending" <%= order.payment_status === 'pending' ? 'selected' : '' %>>pending</option>
+                          <option value="approved" <%= order.payment_status === 'approved' ? 'selected' : '' %>>approved</option>
+                          <option value="rejected" <%= order.payment_status === 'rejected' ? 'selected' : '' %>>rejected</option>
+                        </select>
+                        <select name="status">
+                          <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>pending</option>
+                          <option value="confirmed" <%= order.status === 'confirmed' ? 'selected' : '' %>>confirmed</option>
+                          <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>shipped</option>
+                        </select>
+                        <button class="secondary-button" type="submit">تحديث</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

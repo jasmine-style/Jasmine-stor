@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إتمام الطلب | JASMINE STYLE</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container navbar">
+        <div class="brand">
+          <div class="brand-mark">J</div>
+          <span>JASMINE</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="auth-shell">
+        <h2 style="margin-top:0;">إتمام الطلب</h2>
+
+        <% if (flash) { %>
+          <div class="flash <%= flash.type %>"><%= flash.message %></div>
+        <% } %>
+
+        <form action="/checkout" method="POST" enctype="multipart/form-data" class="form-grid">
+          <div class="form-group">
+            <label>اسم العميل</label>
+            <input type="text" name="customer_name" value="<%= user.full_name || user.username %>" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>رقم الهاتف</label>
+              <input type="text" name="phone" required />
+            </div>
+            <div class="form-group">
+              <label>طريقة الدفع</label>
+              <select name="payment_method" required>
+                <option value="cash_on_delivery">الدفع عند الاستلام</option>
+                <option value="vodafone">فودافون كاش</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>العنوان</label>
+            <textarea name="address" required rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>ملاحظات</label>
+            <textarea name="notes" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>رقم العملية (فودافون كاش)</label>
+            <input type="text" name="transaction_ref" />
+          </div>
+
+          <div class="form-group">
+            <label>إرفاق إيصال الدفع (إن وجد)</label>
+            <input type="file" name="receipt" accept="image/*" />
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-total">
+              <span>الإجمالي</span>
+              <span><%= Number(total || 0).toFixed(2) %> ر.س</span>
+            </div>
+          </div>
+
+          <button class="primary-button" type="submit">تأكيد الطلب</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
